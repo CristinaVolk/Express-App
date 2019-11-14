@@ -83,16 +83,26 @@ export async function login(req, res) {
 }
 
 
-export async function createNewUser(req, res) {
-    const { email, password, displayName } = req.body;
+export const createNewUser = async(req, res) => {
+    try {
+        const {
+            email,
+            password,
+            firstName,
+            lastName,
+        } = req.body;
 
-    const user = await admin.auth().createUser({
-        email,
-        password,
-        displayName
-    });
+        const user = await admin.auth().createUser({
+            email,
+            password,
+            displayName: `${firstName} ${lastName}`,
+        });
 
-    return res.send(user);
+        return res.status(200).send(user);
+
+    } catch (err) {
+        return handleError(res, err)
+    }
 }
 
 
