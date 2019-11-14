@@ -6,12 +6,14 @@
 * type: POST 
 
 * params:  localhost:8081/signup
-``` 
+```
 example content in a body: 
 {
-   "displayName":"Kristina",
-   "email":"KV@gmail.com",
-   "password":"pss"   
+      "email":"volk44@gmail.com",
+      "password":"111111",
+      "firstName":"Blondie",
+      "lastName":"Cris""email":"volk44@gmail.com",
+      "password":"111111",
 }
 ```
 * note: registering twice with the same email is forbidden, when testing registration we should change an email each time. 	     Every field is required during the registering process.
@@ -28,8 +30,8 @@ example content in a body:
 ```
 example content in a body: 
 {
-    "email":"KV@gmail.com",
-     "password":"pss"
+     "email":"volk44@gmail.com",
+     "password":"111111",
 }
 ```
 * valid response:  custom Token is created and later is supposed to be sent into headers to enable another requests
