@@ -1,5 +1,5 @@
 import admin from '../auth/admin';
-//import { auth } from '../auth/client';
+import { auth, loginUser } from '../auth/client';
 
 
 export async function all(req, res) {
@@ -66,36 +66,25 @@ export async function remove(req, res) {
 
 
 export async function login(req, res) {
+    try {
+        const { email, password } = req.body;
 
-    const {
-        email,
-        password
-    } = req.body;
-
-
-    await auth().signInWithEmailAndPassword(email, password).then(() => {
-        auth().onAuthStateChanged(user => {
-            if (user) {
-                admin.auth().createCustomToken(user.uid)
-                    .then(function(customToken) {
-                        res.status(200).json(customToken);
-                    })
-                    .catch(function(error) {
-                        console.log('Error creating custom token:', error);
-                    });
-            }
-        });
-    });
-
+        let userID = await loginUser(email, password);
+        console.log(userID)
+        if (userID) {
+            const customToken = await admin.auth().createCustomToken(userID)
+            if (customToken) {
+                res.status(200).json(customToken);
+            } else console.log('Error creating custom token');
+        }
+    } catch (err) {
+        return handleError(res, err)
+    }
 }
 
 
 export async function createNewUser(req, res) {
-    const {
-        email,
-        password,
-        displayName,
-    } = req.body;
+    const { email, password, displayName } = req.body;
 
     const user = await admin.auth().createUser({
         email,
@@ -105,8 +94,6 @@ export async function createNewUser(req, res) {
 
     return res.send(user);
 }
-
-
 
 
 export function handleError(res, err) {

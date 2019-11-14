@@ -13,6 +13,15 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-export const auth = firebase.auth
-
+export const auth = firebase.auth;
 export default firebase;
+
+export async function loginUser(email, password) {
+    let userId;
+    await auth().signInWithEmailAndPassword(email, password).then((user) => {
+        if (user) {
+            userId = user.user.uid
+        } else console.log("Error during signing the user")
+    });
+    return userId;
+}

@@ -11,7 +11,7 @@
   });
 
   router.get('/', (req, res) => {
-      res.json({ "mess": "Karl" });
+      res.json({ "message": "Karl" });
   })
 
   router.post('/signup', createNewUser);
