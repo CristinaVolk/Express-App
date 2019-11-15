@@ -21,7 +21,18 @@ export async function loginUser(email, password) {
     await auth().signInWithEmailAndPassword(email, password).then((user) => {
         if (user) {
             userId = user.user.uid
+            auth().currentUser.getIdToken( /* forceRefresh */ true).then(function(idToken) {
+                // Send token to your backend via HTTPS
+                console.log(idToken + " Token!!!!!!")
+            }).catch(function(error) {
+                console.log(error)
+            });
         } else console.log("Error during signing the user")
     });
     return userId;
+}
+
+
+export function token() {
+
 }

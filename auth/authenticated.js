@@ -1,4 +1,5 @@
 import admin from './admin';
+import { auth } from './client'
 
 
 const getAuthToken = (req, res, next) => {
@@ -18,12 +19,23 @@ export const checkIfAuthenticated = (req, res, next) => {
     getAuthToken(req, res, async() => {
         try {
             const { authToken } = req;
-            console.log(authToken + " Token!");
-            const userInfo = await admin
+            console.log(typeof(authToken) + " Token from the header");
+
+            const tokenCurrentUser = auth().currentUser.getIdToken( /* forceRefresh */ true).then(function(idToken) {
+                console.log(typeof(idToken) + " Token from the current user!!!!!!")
+            }).catch(function(error) {
+                console.log(error)
+            });
+
+            if (authToken.localeCompare(tokenCurrentUser)) {
+                console.log("YES")
+                return next();
+            }
+            /*const userInfo = await admin
                 .auth()
                 .verifyIdToken(authToken);
             req.authId = userInfo.uid;
-            return next();
+            return next();*/
         } catch (e) {
             return res
                 .status(401)
@@ -31,3 +43,19 @@ export const checkIfAuthenticated = (req, res, next) => {
         }
     });
 };
+
+export async function loginUser(email, password) {
+    let userId;
+    await auth().signInWithEmailAndPassword(email, password).then((user) => {
+        if (user) {
+            userId = user.user.uid
+            auth().currentUser.getIdToken( /* forceRefresh */ true).then(function(idToken) {
+                // Send token to your backend via HTTPS
+                console.log(idToken + " Token!!!!!!")
+            }).catch(function(error) {
+                console.log(error)
+            });
+        } else console.log("Error during signing the user")
+    });
+    return userId;
+}
