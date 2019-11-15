@@ -11,7 +11,7 @@
       next();
   });
 
-  router.get('/token', token)
+
 
   router.post('/signup', createNewUser);
 

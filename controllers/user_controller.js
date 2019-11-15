@@ -1,5 +1,6 @@
 import admin from '../auth/admin';
-import { auth, loginUser } from '../auth/client';
+import { auth } from '../auth/client';
+import { loginUser } from '../auth/authenticated'
 
 
 export async function all(req, res) {
@@ -69,14 +70,11 @@ export async function login(req, res) {
     try {
         const { email, password } = req.body;
 
-        let userID = await loginUser(email, password);
-        console.log(userID)
-        if (userID) {
-            const customToken = await admin.auth().createCustomToken(userID)
-            if (customToken) {
-                res.status(200).json(customToken);
-            } else console.log('Error creating custom token');
-        }
+        let userToken = await loginUser(email, password)
+        console.log(userToken)
+        if (userToken) {
+            res.status(200).json(userToken);
+        } else console.log('Error creating custom token');
     } catch (err) {
         return handleError(res, err)
     }

@@ -45,17 +45,15 @@ export const checkIfAuthenticated = (req, res, next) => {
 };
 
 export async function loginUser(email, password) {
-    let userId;
-    await auth().signInWithEmailAndPassword(email, password).then((user) => {
-        if (user) {
-            userId = user.user.uid
-            auth().currentUser.getIdToken( /* forceRefresh */ true).then(function(idToken) {
-                // Send token to your backend via HTTPS
-                console.log(idToken + " Token!!!!!!")
-            }).catch(function(error) {
-                console.log(error)
-            });
-        } else console.log("Error during signing the user")
-    });
-    return userId;
+    let userToken;
+    const user = await auth().signInWithEmailAndPassword(email, password);
+    if (user) {
+        let userID = user.user.uid
+        const customToken = await admin.auth().createCustomToken(userID)
+        if (customToken) {
+            console.log(customToken)
+            userToken = customToken
+        } else console.log('Error creating custom token');
+    } else console.log("Error during signing the user")
+    return userToken;
 }
