@@ -40,7 +40,7 @@ example content in a body:
 example content in a body: 
 {
      "email":"volk44@gmail.com",
-     "password":"111111",
+     "password":"111111"
 }
 ```
 * valid response:  custom Token is created and later is supposed to be sent into headers to enable another requests
