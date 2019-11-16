@@ -11,18 +11,27 @@ example content in a body:
 {
       "email":"volk44@gmail.com",
       "password":"111111",
-      "firstName":"Blondie",
-      "lastName":"Cris""email":"volk44@gmail.com",
-      "password":"111111",
+      "firstName":"Cris",
+      "lastName":"Blondie"
 }
 ```
-* note: registering twice with the same email is forbidden, when testing registration we should change an email each time. 	     Every field is required during the registering process.
+* note: registering twice with the same email is forbidden, when testing registration we should change an email    each time. Every field is required during the registering process.
 * valid response: object with the newly registered user
 
 ### Edit info about the user
 * type: PATCH
 * params: localhost:8081/signup/:id
 * note: on the backend we check the missing fields. 
+```
+example content in a body: 
+{
+     "displayName": "Jane Doe",
+     "password": "newPassword",
+     "email": "my@example.com",
+     "emailVerified": true
+}
+```
+* valid response:  updated User object
 
 ### Login
 * type: POST
