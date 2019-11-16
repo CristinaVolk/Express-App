@@ -17,11 +17,11 @@
 
   router.post('/login', login);
 
-  router.get('/users', checkIfAuthenticated, all);
+  router.get('/users', /*checkIfAuthenticated,*/ all);
 
   router.get('/users/:id', get);
 
-  router.patch('/users/:id', checkIfAuthenticated, patch);
+  router.patch('/users/:id', /*checkIfAuthenticated,*/ patch);
 
   router.delete('/users/:id', checkIfAuthenticated, remove);
 
