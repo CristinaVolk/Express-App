@@ -22,20 +22,14 @@ export const checkIfAuthenticated = (req, res, next) => {
             console.log(typeof(authToken) + " Token from the header");
 
             const tokenCurrentUser = auth().currentUser.getIdToken( /* forceRefresh */ true).then(function(idToken) {
-                console.log(typeof(idToken) + " Token from the current user!!!!!!")
+                console.log(idToken + " Token from the current user")
             }).catch(function(error) {
                 console.log(error)
             });
 
             if (authToken.localeCompare(tokenCurrentUser)) {
-                console.log("YES")
                 return next();
             }
-            /*const userInfo = await admin
-                .auth()
-                .verifyIdToken(authToken);
-            req.authId = userInfo.uid;
-            return next();*/
         } catch (e) {
             return res
                 .status(401)
