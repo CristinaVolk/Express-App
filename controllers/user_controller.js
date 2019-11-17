@@ -75,13 +75,14 @@ export async function patch(req, res) {
     try {
         const { id } = req.params
         console.log(id);
-        const { displayName, password, email, emailVerified } = req.body
+        const { displayName, password, email, emailVerified, role } = req.body
 
-        if (!id || !displayName || !password || !email || !emailVerified) {
+        if (!id || !displayName || !password || !email || !emailVerified || !role) {
             return res.status(400).send({ message: 'Missing fields' })
         } else {
             const updatedUser = await admin.auth().updateUser(id, { displayName, password, email, emailVerified })
             if (updatedUser) {
+                await admin.auth().setCustomUserClaims(id, { role })
                 return res.status(200).send({ updatedUser })
             }
             return res.status(400).send({ message: "the error ocurres during updating" })

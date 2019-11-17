@@ -28,7 +28,8 @@ example content in a body:
      "displayName": "Jane Doe",
      "password": "newPassword",
      "email": "my@example.com",
-     "emailVerified": true
+     "emailVerified": true,
+     "role": "admin"
 }
 ```
 * valid response:  updated User object
