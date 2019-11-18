@@ -19,18 +19,12 @@ export const checkIfAuthenticated = (req, res, next) => {
     getAuthToken(req, res, async() => {
         try {
             const { authToken } = req;
-            console.log(typeof(authToken) + " Token from the header");
-
-            const tokenCurrentUser = auth().currentUser.getIdToken( /* forceRefresh */ true).then(function(idToken) {
-                console.log(idToken + " Token from the current user")
-            }).catch(function(error) {
-                console.log(error)
-            });
+            const tokenCurrentUser = auth().currentUser.getIdToken( /* forceRefresh */ true)
 
             if (authToken.localeCompare(tokenCurrentUser)) {
                 return next();
             }
-        } catch (e) {
+        } catch (error) {
             return res
                 .status(401)
                 .send({ error: 'You are not authorized to make this request' });
