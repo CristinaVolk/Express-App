@@ -1,7 +1,6 @@
   const express = require('express');
   const router = express.Router();
 
-  import { token } from '../auth/client'
   import { checkIfAuthenticated } from '../auth/authenticated';
   import { colors } from '../colors.json';
   import { all, get, patch, remove, login, createNewUser } from "../controllers/user_controller";

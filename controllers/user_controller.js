@@ -1,5 +1,4 @@
 import admin from '../auth/admin';
-//import { auth } from '../auth/client';
 import { loginUser } from '../auth/authenticated'
 
 export const createNewUser = async(req, res) => {
@@ -85,7 +84,7 @@ export async function patch(req, res) {
                 await admin.auth().setCustomUserClaims(id, { role })
                 return res.status(200).send({ updatedUser })
             }
-            return res.status(400).send({ message: "the error ocurres during updating" })
+            return res.status(400).send({ message: "The error ocurred during updating" })
         }
     } catch (err) {
         return handleError(res, err)
@@ -98,7 +97,7 @@ export async function remove(req, res) {
         const { id } = req.params
 
         await admin.auth().deleteUser(id)
-        return res.status(200).send({ message: "the user has been successfully deleted" })
+        return res.status(200).send({ message: "The user has been successfully deleted" })
     } catch (err) {
         return handleError(res, err)
     }
