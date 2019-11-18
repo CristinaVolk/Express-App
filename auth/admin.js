@@ -1,6 +1,6 @@
 import admin from 'firebase-admin';
 
-const serviceAccount = require('C:/Users/volkk/Desktop/Proektiki/Express-App/serviceKey.json');
+const serviceAccount = require('../serviceKey.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
